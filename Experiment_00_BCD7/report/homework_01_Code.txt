@@ -1,0 +1,56 @@
+vivado
+// round compression function
+module sha256_round (
+	input[31:0] Kt, Wt,
+	input[31:0] a_in, b_in, c_in, d_in, e_in, f_in, g_in, h_in,
+	output[31:0] a_out, b_out, c_out, d_out, e_out, f_out, g_out,h_out
+	);
+	// 请在此补充完整
+	
+endmodule
+	
+// Σ0(x)
+module sha256_S0 (
+	input wire[31:0] x,
+	output wire[31:0] S0
+	);
+	assign S0 =({x[1:0], x[31:2]}^{x[12:0], x[31:13]}^{x[21:0],x[31:22]});
+endmodule
+
+// Σ1(x)
+module sha256_S1 (
+	input wire[31:0] x,
+	output wire[31:0] S1
+	);
+	// 请在此补充完整
+	assign S1=({x[5:0],x[31:6]}^{x[10:0],x[31:11]}^{x[24:0],x[31:25]});
+endmodule
+
+// Ch(x,y,z)
+module Ch (
+	input wire[31:0] x, y, z,
+	output wire[31:0] Ch
+	);
+	assign Ch =((x & y)^(~x & z));
+endmodule
+
+// Maj(x,y,z)
+module Maj (
+	input wire[31:0] x, y, z,
+	output wire[31:0] Maj
+	);
+// 请在此补充完整
+	reg[1:0] flag;
+	initial begin
+		counter='b0;
+		flag=0;
+		while(counter<=31) begin
+			counter=counter +1'b1;		
+			always@(x[counter],y[counter],z[counter]) begin
+				flag=x[counter]+y[counter]+z[counter];
+				Maj[counter]=flag<2?0:1;
+				flag=0;
+			end
+		end
+	end
+endmodule
